@@ -10,7 +10,7 @@
 %   g(z)   is the log exposure corresponding to pixel value z
 %   lE(i)  is the log fil irradiance at pixel location i
 
-function [g,lE] = debevec_gsolve(Z,B,l,w)
+function [g,lE] = DebevecGsolve(Z,B,l,w)
   %% initialization
   n = 256;
   
