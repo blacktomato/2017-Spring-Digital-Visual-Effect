@@ -8,7 +8,6 @@
 %   exclusion_bitmap: zeroed all bits where pixels are within กำ4 of the median value.
 
 function [threshold_bitmap, exclusion_bitmap] = ComputeBitmaps(image)
-  
   %% initialization
   exclude_threshold = 4;
   threshold_bitmap = zeros(size(image,1), size(image, 2));
