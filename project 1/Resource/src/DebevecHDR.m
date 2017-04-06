@@ -34,7 +34,7 @@ function hdr = DebevecHDR(images, shutter_speed)
   Zmax = 255;
   
   % l (const)
-  l = 1;
+  l = 5;
   
   % B(j)
   B = log(1./shutter_speed);
@@ -43,9 +43,9 @@ function hdr = DebevecHDR(images, shutter_speed)
   w = zeros(Zmax - Zmin + 1, 1); % (256,1)
   for i = 1:size(w,1)
     if (i-1) <= (Zmin + Zmax)/2
-      w(i) = (i-1) - Zmin;
+      w(i) = (i-1) - Zmin + 1;
     else
-      w(i) = Zmax - (i-1);
+      w(i) = Zmax - (i-1) + 1;
     end
   end
   

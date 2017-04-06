@@ -36,6 +36,6 @@ function [ldrPic] = tonemapping_global(hdrPic, saturation)
     %figure(1);
     %imshow(L_d); 
     %improve the color and high light part
-    figure(2);
-    imshow(ldrPic);
+    %figure(2);
+    %imshow(ldrPic);
 end
