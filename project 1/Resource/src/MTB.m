@@ -38,23 +38,23 @@ function [X, Y] = MTB(images, n)
         = BuildPyramid(images(:,:,:,i), pyramid_height);
       
       %% compute translation (x,y)
-      for j = pyramid_height:1
+      for j = pyramid_height:-1:1
         % initialization
         best_x = 0;
         best_y = 0;
-        least_diff = size(image_pyramid(j),1) * size(image_pyramid(j),2);
+        least_diff = size(image_pyramid{j},1) * size(image_pyramid{j},2);
         
         % find optimal translation in current layer
         for x = -1:1
           for y = -1:1
             % translation
-            th_tmp = imtranslate(threshold_pyramid(j), [x+X(i,1), y+Y(i,1)]);
-            eb_tmp = imtranslate(exclusion_pyramid(j), [x+X(i,1), y+Y(i,1)]);
+            th_tmp = imtranslate(threshold_pyramid{j}, [x+X(i,1), y+Y(i,1)]);
+            eb_tmp = imtranslate(exclusion_pyramid{j}, [x+X(i,1), y+Y(i,1)]);
             
             % element wise XOR and AND
-            diff_map = bitxor(th_tmp, threshold_pyramid_ref(j));
+            diff_map = bitxor(th_tmp, threshold_pyramid_ref{j});
             diff_map = bitand(diff_map, eb_tmp);
-            diff_map = bitand(diff_map, exclusion_pyramid_ref(j));
+            diff_map = bitand(diff_map, exclusion_pyramid_ref{j});
             diff = sum(diff_map(:));
             if diff < least_diff
               least_diff = diff;
@@ -65,8 +65,10 @@ function [X, Y] = MTB(images, n)
         end
         
         % multiply 2 for the next layer in pyramid
-        X(i,1) = X(i,1) * 2 + best_x;
-        Y(i,1) = Y(i,1) * 2 + best_y;
+        if j ~= 1
+          X(i,1) = X(i,1) * 2 + best_x;
+          Y(i,1) = Y(i,1) * 2 + best_y;
+        end
       end
     end
   end

@@ -20,7 +20,7 @@ default_apply_MTB       = true;
 
 
 %% read in images
-fid = fopen('../input_image/image_list.txt', 'r');
+fid = fopen('../test_image/image_list.txt', 'r');
 image_num = str2double(fgets(fid)); % read in first line
 % initialize
 images = [];
@@ -29,7 +29,7 @@ shutter_speed = zeros(image_num, 1);
 for i = 1:image_num
   readline = fgets(fid);
   readline = strsplit(readline);
-  img = imread(strcat('../input_image/',readline{1,1})); % read image 
+  img = imread(strcat('../test_image/',readline{1,1})); % read image 
   shutter_speed(i,1) = str2double(readline{1,2}); % read shutter speed
   images = cat(4, images, img);
 end
