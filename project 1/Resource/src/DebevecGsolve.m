@@ -24,7 +24,7 @@ function [g,lE] = DebevecGsolve(Z,B,l,w)
       wij = w(Z(i,j)+1); % +1 due to matlab index
       A(k, Z(i,j)+1) = wij;
       A(k, n+i) = -wij;
-      b(k,1) = wij * B(i,j);
+      b(k,1) = wij * B(j);
       k = k + 1;
     end
   end

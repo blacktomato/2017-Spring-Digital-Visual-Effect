@@ -15,8 +15,11 @@
 
 %  Settings:
 
-default_image_alignment = true;
-default_apply_MTB       = true;
+default_image_alignment           = true;
+default_apply_MTB                 = false;
+default_apply_Debevec             = true;
+default_apply_tone_mapping_global = true;
+default_tone_mapping_saturation   = 0.72;
 
 
 %% read in images
@@ -50,7 +53,16 @@ end
 
 % image cropping ( not implemented yet! )
 
-%% Test
-for i = 1:image_num
-  imshow(images(:,:,:,i));
+%% generate HDR image
+
+hdr = DebevecHDR(images, shutter_speed);
+
+%% tone mapping
+if default_apply_tone_mapping_global
+  ldr = tonemapping_global(hdr, default_tone_mapping_saturation);
+else
+  [ldr,~] = tonemapping_local(hdr, default_tone_mapping_saturation);
 end
+
+%% Test
+imshow(ldr);
