@@ -76,7 +76,7 @@ function hdr = DebevecHDR(images, shutter_speed)
         denominator_tmp = 0;
         for p = 1:size(images,4)
           Zij = images(i,j,k,p) + 1; % add 1 due to matlab index
-          numerator_tmp = numerator_tmp + w(Zij)*(g(Zij) - B(p));
+          numerator_tmp = numerator_tmp + w(Zij)*(g(Zij,1,k) - B(p));
           denominator_tmp = denominator_tmp + w(Zij);
         end
         hdr(i,j,k) = exp(numerator_tmp / denominator_tmp);
