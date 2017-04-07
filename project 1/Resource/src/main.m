@@ -1,6 +1,6 @@
 %% 2017 Spring VFX Project 1 - HDR
 %  Author: b03901032 Tzu-Sheng Kuo, b02901001 Sheng-Lung Chung
-%  Date: 2017/03
+%  Date: 2017/03 - 2017/04
 
 %  Assume:
 %   codes are under directory src/ 
@@ -16,19 +16,23 @@
 %  Settings:
 clear;
 clc;
-default_image_alignment           = true;
-default_apply_MTB                 = false;
-default_apply_Debevec             = true;
+
+default_remove_blue_background    = false;
+
+default_image_alignment           = false;
+default_apply_MTB                 = true;
+
+default_apply_Debevec             = false;
+default_apply_Robertson           = true;
+
 default_apply_tone_mapping_global = true;
+default_apply_tone_mapping_local  = false;
 default_tone_mapping_saturation   = 0.5;
-
-
-%% debugging purpose
-% files = {};
 
 %% read in images
 fid = fopen('../input_image/image_list.txt', 'r');
 image_num = str2double(fgets(fid)); % read in first line
+files = {}; % testing purpose
 % initialize
 images = [];
 shutter_speed = zeros(image_num, 1);
@@ -36,26 +40,26 @@ shutter_speed = zeros(image_num, 1);
 for i = 1:image_num
   readline = fgets(fid);
   readline = strsplit(readline);
-  % files = cat(1, files, strcat('../input_image/',readline{1,1})); % debugging purpose
+  files = cat(1, files, strcat('../input_image/',readline{1,1})); % testing purpose
   img = imread(strcat('../input_image/',readline{1,1})); % read image 
   shutter_speed(i,1) = str2double(readline{1,2}); % read shutter speed
   images = cat(4, images, img);
 end
 
-% expTimes = 1./shutter_speed; % debug
+expTimes = 1./shutter_speed; % testing purpose
 
 %% remove pure blue background
-%{
-for i = 1:image_num
-  for j = 1:size(images,1)
-    for k = 1:size(images,2)
-      if images(j,k,1,i) == 0 && images(j,k,2,i) == 0 && images(j,k,3,i) == 255
-        images(j,k,3,i) = 0;
+if default_remove_blue_background
+  for i = 1:image_num
+    for j = 1:size(images,1)
+      for k = 1:size(images,2)
+        if images(j,k,1,i) == 0 && images(j,k,2,i) == 0 && images(j,k,3,i) == 255
+          images(j,k,3,i) = 0;
+        end
       end
     end
   end
 end
-%}
 
 %% image alignment
 aligned_images = [];
@@ -81,19 +85,23 @@ end
 % image cropping ( not implemented yet! )
 
 %% generate HDR image
-hdr = DebevecHDR(images, shutter_speed);
-%hdr_test = makehdr(files, 'ExposureValues', expTimes);
+if default_apply_Debevec
+  hdr = DebevecHDR(images, shutter_speed);
+elseif default_apply_Robertson
+  hdr = RobertsonHDR(images, shutter_speed);
+else
+  hdr = makehdr(files, 'ExposureValues', expTimes); % matlab default
+end
 
 %% tone mapping
 if default_apply_tone_mapping_global
-  %ldr_test = tonemap(hdr);
   ldr = tonemapping_global(hdr, default_tone_mapping_saturation);
-  %ldr_test = tonemapping_global(hdr_test, default_tone_mapping_saturation);
-else
+elseif default_apply_tone_mapping_local
   [ldr,~] = tonemapping_local(hdr, default_tone_mapping_saturation);
+else
+  ldr = tonemap(hdr)
 end
 
 %% Test
 imshow(ldr);
-%imshow(ldr_test);
 %imshowpair(ldr, ldr_test, 'montage');
