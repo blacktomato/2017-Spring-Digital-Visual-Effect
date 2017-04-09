@@ -29,3 +29,6 @@ High Dynamic Range (HDR) images have large dynamic ranges which correspond to ir
     - HDR Model: Debevec’s method, more details down below.
     - Tone Mapping: Reinhard’s method, more details down below.  
 5. The output HDR image in .hdr format, and the LDR image after tone mapping in .bmp format, are both under directory result/.
+
+## More
+More information in Reference/report.pdf
