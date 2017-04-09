@@ -31,4 +31,4 @@ High Dynamic Range (HDR) images have large dynamic ranges which correspond to ir
 5. The output HDR image in .hdr format, and the LDR image after tone mapping in .bmp format, are both under directory result/.
 
 ## More
-More information in Reference/report.pdf
+More information in Resource/report.pdf
