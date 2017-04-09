@@ -19,7 +19,7 @@ High Dynamic Range (HDR) images have large dynamic ranges which correspond to ir
 3. Under directory input_image/, create a .txt file named image_list in the following format:
 
 - line 1: an integer indicating number of images
-- line 2: <image filename> <space> <shutter speed of the image>
+- line 2: image_filename space shutter_speed_of_the_image
 - …
 - line N: ...
 
