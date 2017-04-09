@@ -25,9 +25,9 @@ High Dynamic Range (HDR) images have large dynamic ranges which correspond to ir
 
 4. Open main.m under directory src/ with Matlab, there are several settings to adjust according to your preference. To run default settings, simply run the code without changing anything.
   Default Settings:
-    - Image Alignment: Not applying.
-    - HDR Model: Debevec’s method, more details down below.
-    - Tone Mapping: Reinhard’s method, more details down below.  
+    - Image Alignment: Not applying
+    - HDR Model: Debevec’s method, more details in Resource/report.pdf
+    - Tone Mapping: Reinhard’s method, more details in Resource/report.pdf  
 5. The output HDR image in .hdr format, and the LDR image after tone mapping in .bmp format, are both under directory result/.
 
 ## More
