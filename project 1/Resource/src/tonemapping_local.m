@@ -63,16 +63,17 @@ function [ldrPic, sm] = tonemapping_local(hdrPic, saturation)
         end
     end
 
-    
- %   key = exp((1/N) .* sum(sum( log(delta + v1final) )));
+ % 
+    key = exp((1/N) .* sum(sum( log(delta + v1final) )));
 
     % scaled luminance
- %   a = 0.72;
- %   sL = a / key .* v1final;
+    a = 0.72;
+    sL = a / key .* v1final;
     
- %   L_d = L_w .* (a/key) ./ (1 + sL);
+    L_d = L_w .* (a/key) ./ (1 + sL);
+ %
 
-    L_d = L_w ./ (1 + v1final);
+    % L_d = L_w ./ (1 + v1final);
     ldrPic = zeros(size(hdrPic));
 
     for i=1:3

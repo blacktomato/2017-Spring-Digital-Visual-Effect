@@ -3,7 +3,7 @@
 % Assume:
 %   Zmin = 0
 %   Zmax = 255
-%   lamdba = 1
+%   lamdba = 10
 %   default_sample_num = 50
 
 % input:
@@ -34,7 +34,7 @@ function hdr = DebevecHDR(images, shutter_speed)
   Zmax = 255;
   
   % l (const)
-  l = 5;
+  l = 10;
   
   % B(j)
   B = log(1./shutter_speed);

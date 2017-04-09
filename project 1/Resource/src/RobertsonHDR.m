@@ -3,7 +3,7 @@
 % Assume:
 %   Xmin = 0
 %   Xmax = 255
-%   default_interation_num = 10
+%   default_interation_num = 5
 
 % input:
 %   images: an array of images with dimension a x b x 3 x N
@@ -24,7 +24,7 @@
 
 function hdr = RobertsonHDR(images, shutter_speed)
   %% initialization
-  default_interation_num = 10;
+  default_interation_num = 5;
   t = 1./shutter_speed;
   I_tmp = linspace(0,2,256);
   I = cat(3, I_tmp, I_tmp, I_tmp); % size: 1 x 256 x 3

@@ -17,7 +17,7 @@ function [ldrPic] = tonemapping_global(hdrPic, saturation)
     L_w_mean = exp((1/N) .* sum(sum( log(delta + L_w) )));
 
     % scaled luminance
-    a = 0.72;
+    a = 2.5;
     L = a / L_w_mean .* hdrPic;
     sL_w = a / L_w_mean .* L_w;
 

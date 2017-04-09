@@ -7,7 +7,7 @@
 %   images and image_list.txt are under directory input_images/
 
 %   image_list.txt format:
-%   line 1: numebr of images (an integer)
+%   line 1: number of images (an integer)
 %   line 2: <image_filename> <space> <shutter_speed>
 %   .
 %   .
@@ -22,12 +22,12 @@ default_remove_blue_background    = false;
 default_image_alignment           = false;
 default_apply_MTB                 = true;
 
-default_apply_Debevec             = false;
-default_apply_Robertson           = true;
+default_apply_Debevec             = true;
+default_apply_Robertson           = false;
 
 default_apply_tone_mapping_global = true;
 default_apply_tone_mapping_local  = false;
-default_tone_mapping_saturation   = 0.5;
+default_tone_mapping_saturation   = 0.6;
 
 %% read in images
 fid = fopen('../input_image/image_list.txt', 'r');
@@ -75,15 +75,6 @@ for i = 1:image_num
   aligned_images = cat(4, aligned_images, imtranslate(images(:,:,:,i), [offset_X(i,1), offset_Y(i,1)]));
 end
 
-%{
-%show aligned images ( debugging purpose )
-for i = 1:image_num
-  imshow(aligned_images(:,:,:,i));
-end
-%}
-
-% image cropping ( not implemented yet! )
-
 %% generate HDR image
 if default_apply_Debevec
   hdr = DebevecHDR(images, shutter_speed);
@@ -99,9 +90,10 @@ if default_apply_tone_mapping_global
 elseif default_apply_tone_mapping_local
   [ldr,~] = tonemapping_local(hdr, default_tone_mapping_saturation);
 else
-  ldr = tonemap(hdr)
+  ldr = tonemap(hdr);
 end
 
-%% Test
+%% show and save image
+hdrwrite(hdr, '../result/result.hdr');
+imwrite(ldr, '../result/result.bmp');
 imshow(ldr);
-%imshowpair(ldr, ldr_test, 'montage');
