@@ -129,6 +129,8 @@ function [f, feature_descriptor] = MSOP(image, maxlevel)
                      sample(3:5:end, :) + sample(4:5:end, :) + ...
                      sample(5:5:end, :);
 
+            sample = sample ./ 25;
+
             feature_descriptor = [feature_descriptor reshape(sample', [], 1) ];
         end
     end
