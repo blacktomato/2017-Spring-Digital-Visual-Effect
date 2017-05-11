@@ -6,6 +6,7 @@ Image stitching is a technique to combine a set of images into a larger image by
 #### Cylindrical Projection
 - Inverse Warping
 #### Feature Detection
+- Mutil-Scale Oriented Patches 
 #### Feature Matching 
 #### Image Matching
 #### Bundle Adjustment
