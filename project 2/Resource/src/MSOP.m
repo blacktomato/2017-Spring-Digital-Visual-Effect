@@ -8,9 +8,9 @@
 %   maxlevel: the highest scale level would be used in the MSOP (1 x 1)
 
 % Return:
-%   f: feature_location (2 x N)
+%   f: feature_location (N, 2) [fx, fy]
 %     N: number of features
-%   feature_descriptor: a 64D vector used to represent a feature (64 x N)
+%   feature_descriptor: a 64D vector used to represent a feature (N x 64)
 %     N: number of features
 
 function [f, feature_descriptor] = MSOP(image, maxlevel)
@@ -113,7 +113,7 @@ function [f, feature_descriptor] = MSOP(image, maxlevel)
         for i = 1:size(f_ind, 1)
             [fy, fx] = ind2sub([height, width], f_ind(i));
 
-            f = [f [fx;fy]];
+            f = [f ;[fx fy]];
             o = feature_orientation(f_ind(i));
             x = int32(reshape(d(1,:,:) * cos(o) + d(2,:,:) * (-sin(o)), [40 40]));
             y = int32(reshape(d(1,:,:) * sin(o) + d(2,:,:) * ( cos(o)), [40 40]));
@@ -131,7 +131,7 @@ function [f, feature_descriptor] = MSOP(image, maxlevel)
 
             sample = sample ./ 25;
 
-            feature_descriptor = [feature_descriptor reshape(sample', [], 1) ];
+            feature_descriptor = [feature_descriptor; reshape(sample', 1, []) ];
         end
     end
     fprintf('The highest scale level able to be used: %d\n', max(max(feature_level)));
