@@ -79,7 +79,7 @@ function [images_out, images_starting_x, images_starting_y] = image_matching(ima
     y_total = y_total + y_best;
     images_starting_x = cat(1, images_starting_x, x_total);
     images_starting_y = cat(1, images_starting_y, y_total);
-    images_out = cat(4, images_out, images_tmp);
+    images_out = cat(4, images_out, images_in(:,:,:,selected_id_tmp));
   end
   %% check if x and y out of boundary ( < 0)
   x_min = min(images_starting_x);
