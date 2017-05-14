@@ -26,8 +26,8 @@
 function [images_out, images_starting_x, images_starting_y] = image_matching(images_in, feat)
   %% select first image as reference at the beginning
   images_out = {images_in(:,:,:,1)};
-  images_starting_x = [1];
-  images_starting_y = [1];
+  images_starting_x = 1;
+  images_starting_y = 1;
   ref_id     = 1;
   
   %% init for loop
@@ -38,7 +38,7 @@ function [images_out, images_starting_x, images_starting_y] = image_matching(ima
   y_total = 0;
   
   %% find the image which matches refernce image the most
-  for i = 1:size(images_in,4)
+  for i = 1:(size(images_in,4)-1)
     %% init
     n_in_best = 0;
     n_total_best = 1;
