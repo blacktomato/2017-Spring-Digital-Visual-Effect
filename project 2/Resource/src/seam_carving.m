@@ -20,6 +20,7 @@ function image_out = seam_carving(image_in)
   
   while(true)
     % search for upper horizontal boundary segment
+    fprintf('\nSearching boundary segment...\n')
     x_start = 0;
     x_end = 0;
     started = false;
@@ -52,12 +53,13 @@ function image_out = seam_carving(image_in)
       break;
     end
     
+    fprintf('\nConverting into black and white image...\n')
     % turn colorful image into black and white by equation in MTB
     grey = 54/256  .* image_in(:,x_start:x_end,1) ...
          + 183/256 .* image_in(:,x_start:x_end,2) ...
          + 19/256  .* image_in(:,x_start:x_end,3);
     
-     
+    fprintf('\nComputing gradient...\n')
     % compute gradient using default Sobel's method
     [Gmag, ~] = imgradient(grey);
     
@@ -76,6 +78,7 @@ function image_out = seam_carving(image_in)
     % init directional map
     Dmap = zeros(size(Gmag,1), size(Gmag,2));
     
+    fprintf('\nDynamic Programming...\n')
     % dynamic programming
     % start from 2nd column 
     % M(i, j) = e(i, j) + min(M(i?1, j?1),M(i, j-1),M(i+1, j-1))
@@ -111,6 +114,7 @@ function image_out = seam_carving(image_in)
       end
     end
     
+    fprintf('\nShifting by 1 pixel...\n')
     % find smallest in the last column
     smallest_value = 10000000000.0;
     smallest_id = 0;
