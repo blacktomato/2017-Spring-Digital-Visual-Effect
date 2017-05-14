@@ -45,7 +45,6 @@ function [matching_f] = feature_matching(feature1, feature2, f_descriptor1, f_de
     dis_1 = sqrt(sum((dd1_1 - dd2_1) .^ 2, 2));
     dis_2 = sqrt(sum((dd1_1 - dd2_2) .^ 2, 2));
 
-    disp(size(dis_1))
     k = k(find(dis_1 < (error_ratio * dis_2)));
 
     if (smaller_one == 1) % feature1 is less
