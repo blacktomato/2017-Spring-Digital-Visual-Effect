@@ -49,10 +49,10 @@ toc
 %imshow(marked_image)
 
 %% Cylindrical Projection
-%tic
-%fprintf('\nCylindrical Projection...\n')
-%[projected_images, masks, projected_f] = cylindrical_projection(images, focal_length, f);
-%toc
+tic
+fprintf('\nCylindrical Projection...\n')
+[projected_images, masks, f] = cylindrical_projection(images, focal_length, f);
+toc
 
 %% Feature Matching
 tic
@@ -68,6 +68,9 @@ toc
     
 %% new
 [images_out, images_starting_x, images_starting_y] = image_matching(images, matching_f);   
+images_starting_x = round(images_starting_x)
+images_starting_y = round(images_starting_y)
+images_out2 = blending(images_out, images_starting_x, images_starting_y, 1)
 %% test
 %figure(1)
 %imshow(images(:,:,:, 1));
