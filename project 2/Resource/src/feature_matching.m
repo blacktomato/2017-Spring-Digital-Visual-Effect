@@ -38,7 +38,6 @@ function [matching_f] = feature_matching(feature1, feature2, f_descriptor1, f_de
             k = [k i];
         end
     end
-disp(k)
 
     dd1_1 = d1(k,:);
     dd2_1 = d2(m2(k,1), :);
