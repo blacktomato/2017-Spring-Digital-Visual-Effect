@@ -68,9 +68,12 @@ toc
     
 %% new
 [images_out, images_starting_x, images_starting_y] = image_matching(images, matching_f);   
-images_starting_x = round(images_starting_x)
-images_starting_y = round(images_starting_y)
-images_out2 = blending(images_out, images_starting_x, images_starting_y, 1)
+images_starting_x = round(images_starting_x);
+images_starting_y = round(images_starting_y);
+images_out2 = blending(images_out, images_starting_x, images_starting_y, 1, true);
+images_out2 = seam_carving(images_out2);
+images_out2 = uint8(images_out2);
+imshow(images_out2);
 %% test
 %figure(1)
 %imshow(images(:,:,:, 1));

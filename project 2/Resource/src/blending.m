@@ -4,15 +4,20 @@
 %   images_in: input images with dimension m x n x 3 x N
 %   type: 1. linear
 %         2. to be continue..
+%   seam_carving: if apply seam_carving, set this to true;otherwise, false.
 
 % output
 %   images_out: output panorama image
 
-function images_out = blending(images_in, images_starting_x, images_starting_y, type)
+function images_out = blending(images_in, images_starting_x, images_starting_y, type, seam_carving)
   %% init
   m = size(images_in{1,1,1,1},1);
   n = size(images_in{1,1,1,1},2);
   images_out = zeros(max(images_starting_y)+m-1, max(images_starting_x)+n-1, 3);
+  if seam_carving
+    images_out = images_out - 1;
+  end;
+  
   for i = 1:m
     for j = 1:n
       for k = 1:3
