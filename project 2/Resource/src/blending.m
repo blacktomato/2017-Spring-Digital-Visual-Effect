@@ -12,11 +12,11 @@ function images_out = blending(images_in, images_starting_x, images_starting_y, 
   %% init
   m = size(images_in,1);
   n = size(images_in,2);
-  images_out = zeros(max(images_starting_x)+m-1, images_starting_y+n-1, 3);
+  images_out = zeros(max(images_starting_x)+m-1, max(images_starting_y)+n-1, 3);
   for i = 1:m
     for j = 1:n
       for k = 1:3
-        images_out(i,j,k) = images(i,j,k,1);
+        images_out(i,j,k) = images_in(i,j,k,1);
       end
     end
   end
@@ -35,7 +35,7 @@ function images_out = blending(images_in, images_starting_x, images_starting_y, 
             global_y = images_starting_y(i) + b - 1;
             if (global_x) < right_most_x
               images_out(global_x,global_y,c) ...
-                = images(global_x,global_y,c) * left_image_weight(global_x-left_most_x+1) ...
+                = images_out(global_x,global_y,c) * left_image_weight(global_x-left_most_x+1) ...
                 + images_in(a,b,c) * right_image_weight(a);
             else
               images_out(global_x, global_y,c) = images_in(a,b,c);
