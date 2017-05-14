@@ -96,8 +96,35 @@ function [f, feature_descriptor] = MSOP(image, maxlevel)
         end
     end
 
+    % Non-Maximal Suppression
+    radius = 5;
+    d_radius = 1;
+    f_number = sum(sum(is_feature > 0));
+    %fprintf('\nf_number: %d', f_number);
+
+    while( f_number > 500 )
+        f_ind = find(is_feature);
+        [fy, fx] = ind2sub([height, width], f_ind); 
+        remove_candidate = triu(squareform(pdist([fx fy]) < radius)); 
+
+        [p1, p2] = ind2sub(size(remove_candidate),find(remove_candidate)); 
+        for i = 1:size(p1)
+            if (is_feature(fy(p1(i)),  fx(p1(i))) * is_feature(fy(p2(i)), fx(p2(i))) ~= 0)
+                %keep the one with larger response
+                if is_feature(fy(p1(i)),  fx(p1(i))) <= is_feature(fy(p2(i)), fx(p2(i)))
+                    is_feature(fy(p1(i)),  fx(p1(i))) = 0;
+                else
+                    is_feature(fy(p2(i)),  fx(p2(i))) = 0;
+                end
+            end 
+        end
+        f_number = sum(sum(is_feature > 0));
+        radius = radius + d_radius;
+        %fprintf('\nf_number: %d', f_number);
+    end
+    
+    % calculate the descriptor
     for level = 1:maxlevel
-        % calculate the descriptor
         x = [-19:20];
         y = [-19:20];
         y = transpose(y);
