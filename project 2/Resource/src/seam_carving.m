@@ -47,9 +47,16 @@ function image_out = seam_carving(image_in)
         started = false;
       end
     end
+    % in case when longest_segment = size(image_in,2)
+    if (x_end_tmp - x_start_tmp + 1) > longest_segment
+      x_start = x_start_tmp;
+      x_end = x_end_tmp;
+      longest_segment = x_end_tmp - x_start_tmp + 1;
+    end
     
     % no more boundary segment
     if (longest_segment == 0)
+      fprintf('\nNo more boundary segment...\n')
       break;
     end
     
@@ -85,7 +92,7 @@ function image_out = seam_carving(image_in)
     for j = 2:size(Gmag,2)
       for i = 1:size(Gmag,1)
         if i == 1 % first row
-          m = min(Gmag(i,j-1), Gmag(i+1,j-1));
+          m = min([Gmag(i,j-1), Gmag(i+1,j-1)]);
           Gmag(i,j) = Gmag(i,j) + m;
           if m == Gmag(i,j-1)
             Dmap(i,j) = left;
@@ -93,20 +100,20 @@ function image_out = seam_carving(image_in)
             Dmap(i,j) = down;
           end
         elseif i == size(Gmag,1) % last row
-          m = min(Gmag(i-1,j-1), Gmag(i,j-1));
+          m = min([Gmag(i-1,j-1), Gmag(i,j-1)]);
           Gmag(i,j) = Gmag(i,j) + m;
-          if m == Gmag(i-1,j-1)
-            Dmap(i,j) = up;
-          else
+          if m == Gmag(i,j-1)
             Dmap(i,j) = left;
+          else
+            Dmap(i,j) = up;
           end
         else
-          m = min(Gmag(i-1,j-1), Gmag(i,j-1), Gmag(i+1,j-1));
+          m = min([Gmag(i-1,j-1), Gmag(i,j-1), Gmag(i+1,j-1)]);
           Gmag(i,j) = Gmag(i,j) + m;
-          if m == Gmag(i-1,j-1)
-            Dmap = up;
-          elseif m == Gmag(i,j-1)
+          if m == Gmag(i,j-1)
             Dmap = left;
+          elseif m == Gmag(i-1,j-1)
+            Dmap = up;
           else
             Dmap = down;
           end

@@ -26,8 +26,8 @@
 function [images_out, images_starting_x, images_starting_y] = image_matching(images_in, feat)
   %% select first image as reference at the beginning
   images_out = {};
-  images_starting_x = 1;
-  images_starting_y = 1;
+  images_starting_x = [];
+  images_starting_y = [];
   ref_id     = 1;
   
   %% init for loop
@@ -85,11 +85,9 @@ function [images_out, images_starting_x, images_starting_y] = image_matching(ima
   x_min = min(images_starting_x);
   y_min = min(images_starting_y);
   if x_min < 1
-    x_min = abs(x_min) + 1;
-    images_starting_x = images_starting_x + x_min;
+    images_starting_x = images_starting_x - x_min + 1;
   end
   if y_min < 1
-    y_min = abs(y_min) + 1;
-    images_starting_y = images_starting_y + y_min;
+    images_starting_y = images_starting_y - y_min + 1;
   end
 end
