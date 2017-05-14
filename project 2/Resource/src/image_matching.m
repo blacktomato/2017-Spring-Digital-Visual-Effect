@@ -1,14 +1,14 @@
 %% image matching using RANSAC
 
 % input
-%   images_in: input images with dimension n x m x 3 x N
+%   images_in: input images with dimension m x n x 3 x N
 %   feat     : input image cell array featues with dimension N x N
 %              inside each call is an array with dimension N x 2
 %              for example, cell at (2,1) is the matching feature of the
 %              second image and the first image. 
 
 % output
-%   images_out: output images with dimension n x m x 3 x N'
+%   images_out: output images with dimension m x n x 3 x N'
 %               ( N' may not equal to N after filtering out noisy images )
 %   images_starting_x  : global x coordinates for the leftmost and upmost 
 %                        point in images ( dimension: N' )
@@ -79,7 +79,7 @@ function [images_out, images_starting_x, images_starting_y] = image_matching(ima
     y_total = y_total + y_best;
     images_starting_x = cat(1, images_starting_x, x_total);
     images_starting_y = cat(1, images_starting_y, y_total);
-    images_out = cat(4, images_out, images_in(:,:,:,selected_id_tmp));
+    images_out = cat(4, images_out, images_tmp);
   end
   %% check if x and y out of boundary ( < 0)
   x_min = min(images_starting_x);
