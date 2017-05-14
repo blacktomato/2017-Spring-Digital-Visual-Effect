@@ -18,6 +18,8 @@ function image_out = seam_carving(image_in)
   down  = 2;
   left  = 3;
   
+  counter = 0;
+  
   while(true)
     % search for upper horizontal boundary segment
     fprintf('\nSearching boundary segment...\n')
@@ -47,8 +49,7 @@ function image_out = seam_carving(image_in)
         started = false;
       end
     end
-    % in case when longest_segment = size(image_in,2)
-    if (x_end_tmp - x_start_tmp + 1) > longest_segment
+    if started && ((x_end_tmp - x_start_tmp + 1) > longest_segment)
       x_start = x_start_tmp;
       x_end = x_end_tmp;
       longest_segment = x_end_tmp - x_start_tmp + 1;
@@ -68,10 +69,10 @@ function image_out = seam_carving(image_in)
     
     fprintf('\nComputing gradient...\n')
     % compute gradient using default Sobel's method
-    [Gmag, ~] = imgradient(grey);
+    [~, Gmag] = imgradientxy(grey);
     
     % remove the effect from pixels outside the boundary ( which have very
-    % low gradient and may affect the result
+    % low gradient may affect the result
     for i = 1:size(Gmag,1)
       for j = 1:size(Gmag,2)
         if (image_in(i,x_start+j-1,1) == -1) && ...
@@ -121,7 +122,8 @@ function image_out = seam_carving(image_in)
       end
     end
     
-    fprintf('\nShifting by 1 pixel...\n')
+    counter = counter + 1;
+    fprintf('\nShifting by %d pixel...\n', counter);
     % find smallest in the last column
     smallest_value = 10000000000.0;
     smallest_id = 0;
@@ -138,7 +140,7 @@ function image_out = seam_carving(image_in)
       break; % didn't find ( this should never happen )
     end
     
-    for col = x_end:x_start:-1
+    for col = x_end:-1:x_start
       for row = 2:size(Gmag,1)
           
         % shift image
@@ -149,7 +151,7 @@ function image_out = seam_carving(image_in)
         elseif (row == smallest_id) && (row ~= size(Gmag,1)) %% not last row
           tmp = image_in(row-1,col,:);
           image_in(row-1,col,:) = image_in(row,col,:);
-          image_in(row,col) = 0.5 * (tmp + image_in(row+1,col,:));
+          image_in(row,col,:) = 0.5 .* (tmp + image_in(row+1,col,:));
         end
         
         % update smallest_id
