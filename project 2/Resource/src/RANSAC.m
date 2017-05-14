@@ -28,15 +28,15 @@ function [n_in, n_total, best_x, best_y] = RANSAC(feat_1, feat_2)
   
   % start RANSAC
   for i = 1:k
-    tmp_x = feat_2(i,2) - feat_1(i,2);
-    tmp_y = feat_2(i,1) - feat_1(i,1);
+    tmp_x = feat_2(i,1) - feat_1(i,1);
+    tmp_y = feat_2(i,2) - feat_1(i,2);
     n_in_tmp = 0;
     for j = 1:size(feat_1,1)
       if i == j
         continue;
       else
-        if sqrt(( feat_2(j,2) - feat_1(j,2) - tmp_x)^2 + ...
-                ( feat_2(j,1) - feat_1(j,1) - tmp_y)^2 ) <= threshold
+        if sqrt(( feat_2(j,1) - feat_1(j,1) - tmp_x)^2 + ...
+                ( feat_2(j,2) - feat_1(j,2) - tmp_y)^2 ) <= threshold
           n_in_tmp = n_in_tmp + 1;
         end
       end

@@ -36,9 +36,9 @@ function images_out = blending(images_in, images_starting_x, images_starting_y, 
             if (global_x) < right_most_x
               images_out(global_x,global_y,c) ...
                 = images_out(global_x,global_y,c) * left_image_weight(global_x-left_most_x+1) ...
-                + images_in{1,1,1,i}(a,b,c) * right_image_weight(a);
+                + images_in{1,1,1,i}(b,a,c) * right_image_weight(a);
             else
-              images_out(global_x, global_y,c) = images_in{1,1,1,i}(a,b,c);
+              images_out(global_x, global_y,c) = images_in{1,1,1,i}(b,a,c);
             end
           end
         end
