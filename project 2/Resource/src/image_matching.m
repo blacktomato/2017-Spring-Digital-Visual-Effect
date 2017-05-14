@@ -2,7 +2,10 @@
 
 % input
 %   images_in: input images with dimension n x m x 3 x N
-%   feat     : input image featues with dimension N x 2, 2 for (x,y)
+%   feat     : input image cell array featues with dimension N x N
+%              inside each call is an array with dimension N x 2
+%              for example, cell at (2,1) is the matching feature of the
+%              second image and the first image. 
 
 % output
 %   images_out: output images with dimension n x m x 3 x N'
@@ -25,7 +28,6 @@ function [images_out, images_starting_x, images_starting_y] = image_matching(ima
   images_out = {images_in(:,:,:,1)};
   images_starting_x = [1];
   images_starting_y = [1];
-  feat_ref   = feat(1,:);
   ref_id     = 1;
   
   %% init for loop
@@ -49,7 +51,14 @@ function [images_out, images_starting_x, images_starting_y] = image_matching(ima
       if (ref_id == j) || (any(cellfun(@(x) isequal(x, j), selected_id)))
         continue % skip if same as current one or have already been selected
       else
-        [n_in, n_total, x, y] = RANSAC(feat(j,:), feat_ref);
+        if ref_id < j
+          feat_ref = feat{ref_id,j}(:,1:2);
+          feat_current = feat{ref_id,j}(:,3:4);
+        else
+          feat_ref = feat{j,ref_id}(:,3:4);
+          feat_current = feat{j,ref_id}(:,1:2);
+        end
+        [n_in, n_total, x, y] = RANSAC(feat_current, feat_ref);
         if (n_in > 5.9 + 0.22 * n_total) && (n_in/n_total > n_in_best/n_total_best)
           n_in_best = n_in;
           n_total_best = n_total;
@@ -64,7 +73,7 @@ function [images_out, images_starting_x, images_starting_y] = image_matching(ima
     if end_loop
       break; % no matching images left (filter out noisy images)
     end
-    
+    ref_id = selected_id_tmp;
     selected_id = cat(1, selected_id, selected_id_tmp);
     x_total = x_total + x_best;
     y_total = y_total + y_best;
