@@ -46,7 +46,7 @@ function images_out = blending(images_in, images_starting_x, images_starting_y, 
               images_out(global_y,global_x,c) ...
                 = images_out(global_y,global_x,c) * left_image_weight(global_x-left_most_x+1) ...
                 + images_in{1,1,1,i}(b,a,c) * right_image_weight(a);
-            elseif images_out(global_y,global_x,c) == 0 && images_in{1,1,1,i}(b,a,c) > 0
+            elseif images_out(global_y,global_x,c) <= 0 && images_in{1,1,1,i}(b,a,c) > 0
               images_out(global_y, global_x,c) = images_in{1,1,1,i}(b,a,c);
             end
           end
