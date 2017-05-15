@@ -66,14 +66,24 @@ for i = 1: (image_num - 1)
 end
 toc
     
-%% new
-[images_out, images_starting_x, images_starting_y] = image_matching(images, matching_f);   
+%% Image Matching and Blending
+tic
+fprintf('\nImage Matching and Blending...\n')
+
+[images_out, images_starting_x, images_starting_y] = image_matching(projected_images, matching_f);   
 images_starting_x = round(images_starting_x);
 images_starting_y = round(images_starting_y);
 images_out2 = blending(images_out, images_starting_x, images_starting_y, 1, true);
+
+toc
+tic
+fprintf('\nRectangling the Panorama...\n')
 images_out2 = seam_carving(images_out2);
+
 images_out2 = uint8(images_out2);
 imshow(images_out2);
+toc
+
 %% test
 %figure(1)
 %imshow(images(:,:,:, 1));
