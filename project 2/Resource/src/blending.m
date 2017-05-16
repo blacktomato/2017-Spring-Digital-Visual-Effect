@@ -18,23 +18,19 @@ function images_out = blending(images_in, images_starting_x, images_starting_y, 
     images_out = images_out - 1;
   end;
   
-%  for i = 1:m
-%    for j = 1:n
-%      for k = 1:3
-%        images_out(i,j,k) = images_in{1,1,1,1}(i,j,k);
-%      end
-%    end
-%  end
+  for i = 1:m
+    for j = 1:n
+      for k = 1:3
+        images_out(i,j,k) = images_in{1,1,1,1}(i,j,k);
+      end
+    end
+  end
 
   %% linear
   if type == 1
-    for i = 1:size(images_in,4)
+    for i = 2:size(images_in,4)
       left_most_x  = images_starting_x(i);
-      if i == 1
-          right_most_x = 0;
-      else
-          right_most_x = images_starting_x(i-1) + n - 1;
-      end
+      right_most_x = images_starting_x(i-1) + n - 1;
       left_image_weight  = linspace(1,0,right_most_x-left_most_x+1);
       right_image_weight = linspace(0,1,right_most_x-left_most_x+1);
       for a = 1:n
@@ -42,18 +38,17 @@ function images_out = blending(images_in, images_starting_x, images_starting_y, 
           for c = 1:3
             global_x = images_starting_x(i) + a - 1;
             global_y = images_starting_y(i) + b - 1;
-            if images_out(global_y,global_x,c) > 0 && images_in{1,1,1,i}(b,a,c) > 0
+            if (global_x) < right_most_x
               images_out(global_y,global_x,c) ...
                 = images_out(global_y,global_x,c) * left_image_weight(global_x-left_most_x+1) ...
                 + images_in{1,1,1,i}(b,a,c) * right_image_weight(a);
-            elseif images_out(global_y,global_x,c) <= 0 && images_in{1,1,1,i}(b,a,c) > 0
+            else
               images_out(global_y, global_x,c) = images_in{1,1,1,i}(b,a,c);
             end
           end
         end
       end
     end
-
   
   %% else
   elseif type == 2
