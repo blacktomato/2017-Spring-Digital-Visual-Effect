@@ -65,6 +65,7 @@ function [projected_images, masks, projected_f_p] = cylindrical_projection( imag
             p_img(:,:,j) = p_img(:,:,j) .* mask;
         end
         masks = cat(3, masks, mask);
+        p_img = p_img + (mask - 1);
         projected_images = cat(4, projected_images, p_img);
         
         if ~exist('f_p')
