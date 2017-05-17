@@ -44,7 +44,7 @@ toc
 
 %Concatenate all images
 %for i = 1:image_num 
-%    marked_image = [marked_image insertMarker(images(:,:,:,i),f{i}','o','color','red','size',2)];
+%    marked_image = [marked_image insertMarker(images(:,:,:,i),f{i},'o','color','red','size',2)];
 %end
 %imshow(marked_image)
 
@@ -73,20 +73,18 @@ fprintf('\nImage Matching and Blending...\n')
 [images_out, images_starting_x, images_starting_y] = image_matching(projected_images, matching_f);   
 images_starting_x = round(images_starting_x);
 images_starting_y = round(images_starting_y);
-images_out2 = blending(images_out, images_starting_x, images_starting_y, 1, true);
+linear = blending(images_out, images_starting_x, images_starting_y, 1, true);
+multiband = blending(images_out, images_starting_x, images_starting_y, 2, true);
 
 toc
-tic
-fprintf('\nRectangling the Panorama...\n')
-images_out2 = seam_carving(images_out2);
 
-images_out2 = uint8(images_out2);
-imshow(images_out2);
-toc
-
-%% test
+%fprintf('\nRectangling the Panorama...\n')
+%images_out2 = seam_carving(images_out2);
 %figure(1)
-%imshow(images(:,:,:, 1));
-%figure(2)
-%imshow(uint8(projected_images(:,:,:, 1)));
+%imshow(uint8(linear));
+figure(2)
+imshow(uint8(multiband));
+fprintf('\nOutput Images...\n')
+imwrite(uint8(linear), 'linear.jpg')
+imwrite(uint8(multiband), 'multiband.jpg')
 

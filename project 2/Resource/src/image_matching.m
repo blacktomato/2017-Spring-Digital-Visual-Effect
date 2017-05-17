@@ -25,9 +25,9 @@
 
 function [images_out, images_starting_x, images_starting_y] = image_matching(images_in, feat)
   %% select first image as reference at the beginning
-  images_out = {};
-  images_starting_x = [];
-  images_starting_y = [];
+  images_out = {images_in(:,:,:,1)};
+  images_starting_x = 1;
+  images_starting_y = 1;
   ref_id     = 1;
   
   %% init for loop
@@ -59,7 +59,7 @@ function [images_out, images_starting_x, images_starting_y] = image_matching(ima
           feat_current = feat{j,ref_id}(:,1:2);
         end
         [n_in, n_total, x, y] = RANSAC(feat_current, feat_ref);
-        if (n_in > 5.9 + 0.22 * n_total) && (n_in/n_total > n_in_best/n_total_best)
+        if (n_in > 5.9 + 0.02 * n_total) && (n_in/n_total > n_in_best/n_total_best)
           n_in_best = n_in;
           n_total_best = n_total;
           x_best = x;
