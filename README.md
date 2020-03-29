@@ -10,10 +10,6 @@ High Dynamic Range (HDR) images have large dynamic ranges which correspond to ir
 <br />Fig. 1.1 Input images
 </p>
 
-
-
-
-
 <p align="center">
 <img src = "https://github.com/blacktomato/2017-Spring-Digital-Visual-Effect/blob/master/pics/output_img.JPG" alt="Output image"></img>
 <br />Fig. 1.2 Output image
@@ -24,9 +20,18 @@ High Dynamic Range (HDR) images have large dynamic ranges which correspond to ir
 
 ## Project 2: Image Stitching
 
-Image stitching is useful when creating an image with larger field of view (FOV) by stitching a set of images altogether. A common application of image stitching is to create a panorama, which has a wide-horizontal-angle view. In this project, we implemented an end-to-end algorithm, with input as a set of images, and with the output being the panorama of these images.
+Image stitching is useful when creating an image with larger field of view (FOV) by stitching a set of images altogether. A common application of image stitching is to create a panorama, which has a wide-horizontal-angle view. In this project, we implemented an end-to-end algorithm, with input as a set of images (Fig. 2.1), and with the output being the panorama (Fig. 2.2) of these images.
 
 
+<p align="center">
+<img src = "https://github.com/blacktomato/2017-Spring-Digital-Visual-Effect/blob/master/pics/input_imgs_panorama.JPG"  alt="Input images"></img>
+<br />Fig. 2.1 Input images
+</p>
+
+<p align="center">
+<img src = "https://github.com/blacktomato/2017-Spring-Digital-Visual-Effect/blob/master/pics/output_img_panorama.JPG" alt="Output image"></img>
+<br />Fig. 2.2 Output image
+</p>
 
 ## Project 3: MatchMove
 
