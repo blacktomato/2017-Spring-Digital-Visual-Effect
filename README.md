@@ -5,19 +5,21 @@ Assignments and Project of the course Digital Visual Effect, Spring 2017
 
 High Dynamic Range (HDR) images have large dynamic ranges which correspond to irradiance value of a scene in physical world. This project implemented a program to assemble an HDR image from a list of images (Fig. 1.1) with identical scene but with different exposure times.
 
-<div style="text-align: center"/>
-<img src = "https://github.com/blacktomato/2017-Spring-Digital-Visual-Effect/blob/master/pics/input_imgs.JPG"  alt="Input images"/>
-</div>
-
-Fig. 1.1 Input images
-
+<p align="center">
+<img src = "https://github.com/blacktomato/2017-Spring-Digital-Visual-Effect/blob/master/pics/input_imgs.JPG"  alt="Input images"></img>
+<br />Fig. 1.1 Input images
+</p>
 
 
-<div style="text-align: center"/>
-<img src = "https://github.com/blacktomato/2017-Spring-Digital-Visual-Effect/blob/master/pics/output_img.JPG" alt="Output image"/>
-</div>
 
-Fig. 1.2 Output image
+
+
+<p align="center">
+<img src = "https://github.com/blacktomato/2017-Spring-Digital-Visual-Effect/blob/master/pics/output_img.JPG" alt="Output image"></img>
+<br />Fig. 1.2 Output image
+</p>
+
+
 
 
 ## Project 2: Image Stitching
